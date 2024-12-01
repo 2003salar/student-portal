@@ -24,9 +24,13 @@ const Users = sequelize.define('User', {
         type: DataTypes.STRING(150),
         allowNull: false,
     },
-    password: {
+    password_hash: {
         type: DataTypes.STRING(120),
         allowNull: false,
+    },
+    isAdmin: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
     },
     createdAt: {
         type: DataTypes.DATE,
