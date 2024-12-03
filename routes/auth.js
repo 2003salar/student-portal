@@ -3,6 +3,8 @@ const router = express.Router();
 const Users = require('../models')
 const bcrypt = require('bcrypt')
 const validator = require('validator')
+const passport = require('passport');
+require('../helpers/passportConfig');
 
 router.get('/', async (req, res)=> {
     try {
@@ -62,6 +64,10 @@ router.post('/register', async (req, res) => {
         return res.status(500).json({message: "Internal Server Error"});
         
     }
+});
+
+router.post('/login', passport.authenticate('local'), (req, res) => {
+    res.status(200).json({success: true, message: 'Successfully logged in'});
 });
 
 module.exports = router;

@@ -49,6 +49,23 @@ const Users = sequelize.define('User', {
     }]
 });
 
+const Session = sequelize.define('Session', {
+    sid: {
+        type: DataTypes.STRING,
+        primaryKey: true,
+    },
+    sess: {
+        type: DataTypes.JSON,
+        allowNull: false,
+    },
+    expire: {
+        type: DataTypes.DATE,
+        allowNull: false
+    }
+}, {
+    tableName: 'session',
+    timestamps: false
+});
 
 const asyncDB = async() => {
     try {
@@ -61,4 +78,7 @@ const asyncDB = async() => {
 }
 asyncDB()
 
-module.exports = Users
+module.exports = {
+    Users,
+    Session,
+}
