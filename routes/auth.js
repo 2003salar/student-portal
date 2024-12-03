@@ -4,6 +4,7 @@ const Users = require('../models')
 const bcrypt = require('bcrypt')
 const validator = require('validator')
 const passport = require('passport');
+const isUserAuthenticated = require('../helpers/isUserAuthenticated');
 require('../helpers/passportConfig');
 
 router.get('/', async (req, res)=> {
@@ -69,5 +70,15 @@ router.post('/register', async (req, res) => {
 router.post('/login', passport.authenticate('local'), (req, res) => {
     res.status(200).json({success: true, message: 'Successfully logged in'});
 });
+
+router.get('/logout', isUserAuthenticated, (req, res) => {
+    req.logout((err) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).json({success: false, message: 'Logout failed'});
+        }
+        return res.status(200).json({success: true, message: 'You are logged out successfully'});
+    })
+})
 
 module.exports = router;
