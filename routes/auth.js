@@ -78,7 +78,7 @@ router.get('/logout', isUserAuthenticated, (req, res) => {
             return res.status(500).json({success: false, message: 'Logout failed'});
         }
         return res.status(200).json({success: true, message: 'You are logged out successfully'});
-    })
-})
+    });
+});
 
 module.exports = router;
