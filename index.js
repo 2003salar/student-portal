@@ -30,6 +30,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/users', require('./routes/users'));
 app.all("*", (req, res) => res.status(404).json({message: "Page not Found"}));
 
 app.listen(3000, ()=> {
