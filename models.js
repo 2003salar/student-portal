@@ -67,6 +67,26 @@ const Session = sequelize.define('Session', {
     timestamps: false
 });
 
+const Courses = sequelize.define('Course', {
+    id: {
+        type: DataTypes.BIGINT,
+        primaryKey: true,
+        autoIncrement: true,
+    }, 
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+    }, 
+    description: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+}, {
+    tableName: 'courses',
+    timestamps: false,
+});
+
 const asyncDB = async() => {
     try {
         await sequelize.authenticate();
@@ -81,4 +101,5 @@ asyncDB()
 module.exports = {
     Users,
     Session,
+    Courses,
 }
