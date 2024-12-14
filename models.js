@@ -87,6 +87,46 @@ const Courses = sequelize.define('Course', {
     timestamps: false,
 });
 
+const Enrollments = sequelize.define('Enrollment', {
+    id: {
+        type: DataTypes.BIGINT,
+        autoIncrement: true, 
+        primaryKey: true,
+    },
+    courseId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: Courses,
+            key: 'id',
+            onDelete: 'CASCADE',
+        }
+    },
+    studentId: {
+        type: DataTypes.INTEGER,
+        allowNull: false, 
+        references: {
+            model: Users,
+            key: 'id',
+            onDelete: 'CASCADE',
+        }
+    },
+    registeredAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+    }
+}, {
+    tableName: 'enrollments',
+    timestamps: true,
+    createdAt: 'registeredAt',
+});
+
+Enrollments.createAndReturn = async function (data) {
+    const enrollment = await this.create(data);
+    return enrollment;
+};
+
 const asyncDB = async() => {
     try {
         await sequelize.authenticate();
@@ -102,4 +142,5 @@ module.exports = {
     Users,
     Session,
     Courses,
+    Enrollments,
 }
