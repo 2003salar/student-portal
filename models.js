@@ -127,6 +127,9 @@ Enrollments.createAndReturn = async function (data) {
     return enrollment;
 };
 
+Users.hasMany(Enrollments, {foreignKey: 'studentId', as: 'enrollments'});
+Enrollments.belongsTo(Users, {foreignKey: 'studentId', as: 'student'});
+
 const asyncDB = async() => {
     try {
         await sequelize.authenticate();
